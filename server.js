@@ -6,7 +6,7 @@ dotenv.config();
 const jwt = jsonwebtoken;
 const app = express();
 app.use(cors());
-
+app.use(express.json());
 const port = 5000;
 const booksList = [
   {
@@ -34,7 +34,7 @@ const booksList = [
 
 let refreshTokens = [];
 
-app.get("/books", authenticateToken, (req, res, next) => {
+app.get("/books", authenticateToken, (req, res) => {
   res.json(booksList.find((book) => book.username === req.user.username).books);
 });
 
@@ -54,7 +54,7 @@ app.delete("/logout", (req, res) => {
   res.sendStatus(204);
 });
 
-app.post("/login", (req, res, next) => {
+app.post("/login", (req, res) => {
   // Authenticate user
   const user = { username: req.body.username, password: req.body.password };
   if (!booksList.map(book=>book.username).includes(user.username)) return res.sendStatus(401);
