@@ -1,11 +1,11 @@
 import dotenv from "dotenv";
 import express from "express";
+import cors from "cors";
 import jsonwebtoken from "jsonwebtoken";
 dotenv.config();
 const jwt = jsonwebtoken;
 const app = express();
-
-app.use(express.json());
+app.use(cors());
 
 const port = 5000;
 const booksList = [
