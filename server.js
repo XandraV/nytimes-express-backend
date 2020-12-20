@@ -55,7 +55,10 @@ app.delete("/logout", (req, res) => {
   res.sendStatus(204);
 });
 
-app.post("/login", (req, res) => {
+app.post("/login", (req, res, next) => {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
   // Authenticate user
   const user = { username: req.body.username, password: req.body.password };
   if (!booksList.map(book=>book.username).includes(user.username)) return res.sendStatus(401);
