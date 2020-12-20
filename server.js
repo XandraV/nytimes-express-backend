@@ -1,13 +1,12 @@
 import dotenv from "dotenv";
 import express from "express";
-import cors from "cors";
 import jsonwebtoken from "jsonwebtoken";
 dotenv.config();
 const jwt = jsonwebtoken;
 const app = express();
-app.use(cors());
+
 app.use(express.json());
-app.options('*', cors())
+
 const port = 5000;
 const booksList = [
   {
@@ -36,9 +35,6 @@ const booksList = [
 let refreshTokens = [];
 
 app.get("/books", authenticateToken, (req, res, next) => {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-  next();
   res.json(booksList.find((book) => book.username === req.user.username).books);
 });
 
@@ -59,9 +55,6 @@ app.delete("/logout", (req, res) => {
 });
 
 app.post("/login", (req, res, next) => {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-  next();
   // Authenticate user
   const user = { username: req.body.username, password: req.body.password };
   if (!booksList.map(book=>book.username).includes(user.username)) return res.sendStatus(401);
