@@ -35,7 +35,10 @@ const booksList = [
 
 let refreshTokens = [];
 
-app.get("/books", authenticateToken, (req, res) => {
+app.get("/books", authenticateToken, (req, res, next) => {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
   res.json(booksList.find((book) => book.username === req.user.username).books);
 });
 
