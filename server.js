@@ -7,6 +7,7 @@ const jwt = jsonwebtoken;
 const app = express();
 app.use(cors());
 app.use(express.json());
+app.options('*', cors())
 const port = 5000;
 const booksList = [
   {
